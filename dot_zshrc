@@ -1,0 +1,68 @@
+# ============================================================
+# Powerlevel10k instant prompt (must be near the top)
+# ============================================================
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ============================================================
+# Oh My Zsh
+# ============================================================
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+plugins=(
+  git
+  npm
+  zsh-autosuggestions
+  zsh-completions
+  zsh-syntax-highlighting
+)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# ============================================================
+# PATH
+# ============================================================
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+# ============================================================
+# Aliases / functions
+# ============================================================
+killport() {
+  if [ -z "$1" ]; then
+    echo "Usage: killport <port>"
+    return 1
+  fi
+
+  lsof -ti:"$1" | xargs -n 1 kill -9 2>/dev/null
+  echo "Killed processes on port $1"
+}
+
+# ============================================================
+# SSH Agent
+# ============================================================
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" >/dev/null 2>&1
+  ssh-add "$HOME/.ssh/id_ed25519" >/dev/null 2>&1
+fi
+
+# ============================================================
+# Google Cloud SDK (zsh)
+# ============================================================
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+  source "$HOME/google-cloud-sdk/path.zsh.inc"
+fi
+
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+  source "$HOME/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# ============================================================
+# Powerlevel10k config
+# ============================================================
+[[ -f "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
