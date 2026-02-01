@@ -1,0 +1,12 @@
+# ~/.bash_aliases
+
+killport() {
+  if [ -z "$1" ]; then
+    echo "Usage: killport <port>"
+    return 1
+  fi
+
+  lsof -ti:"$1" | xargs -n 1 kill -9 2>/dev/null
+  echo "Killed processes on port $1"
+}
+

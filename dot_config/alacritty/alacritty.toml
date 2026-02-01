@@ -1,0 +1,35 @@
+# Font
+[font]
+size = 15.0
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+# Window
+[window]
+padding = { x = 10, y = 10 }
+decorations = "buttonless"
+startup_mode = "Windowed"
+opacity = 0.95
+
+# Cursor
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+# Scrolling
+[scrolling]
+history = 50000
+
+# Shell
+[terminal.shell]
+program = "/bin/bash"
+args = ["-l"]

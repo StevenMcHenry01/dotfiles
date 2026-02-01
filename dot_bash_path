@@ -1,0 +1,11 @@
+# ~/.bash_path
+
+# user-local bins
+export PATH="$HOME/.local/bin:$PATH"
+
+# homebrew (Apple Silicon)
+export PATH="/opt/homebrew/bin:$PATH"
+
+# postgres@16 (homebrew)
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+

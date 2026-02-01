@@ -1,0 +1,56 @@
+# ~/.bashrc
+
+# If not running interactively, don't do anything
+case $- in
+  *i*) ;;
+  *) return ;;
+esac
+
+# ----- PATH (keep it tidy) -----
+if [ -f "$HOME/.bash_path" ]; then
+  source "$HOME/.bash_path"
+fi
+
+# ----- Aliases -----
+if [ -f "$HOME/.bash_aliases" ]; then
+  source "$HOME/.bash_aliases"
+fi
+
+# ----- SSH agent (similar to what you had) -----
+# Only start if we don't already have one
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" >/dev/null 2>&1
+  ssh-add "$HOME/.ssh/id_ed25519" >/dev/null 2>&1
+fi
+
+# ----- Google Cloud SDK (bash versions) -----
+# NOTE: your zshrc references path.zsh.inc / completion.zsh.inc
+# For bash, these are typically path.bash.inc and completion.bash.inc
+if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
+  source "$HOME/google-cloud-sdk/path.bash.inc"
+fi
+
+if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then
+  source "$HOME/google-cloud-sdk/completion.bash.inc"
+fi
+
+# ----- Better history -----
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+shopt -s histappend
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+
+# ----- Bash completion (macOS + Homebrew) -----
+# Apple bash may not ship completion by default; Homebrew does.
+if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+  source /opt/homebrew/etc/profile.d/bash_completion.sh
+elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
+  source /usr/local/etc/profile.d/bash_completion.sh
+fi
+
+# ----- Prompt (Starship) -----
+# Install: brew install starship
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi
+
