@@ -28,8 +28,3 @@ style = { shape = "Block", blinking = "On" }
 # Scrolling
 [scrolling]
 history = 50000
-
-# Shell
-[terminal.shell]
-program = "/bin/bash"
-args = ["-l"]
